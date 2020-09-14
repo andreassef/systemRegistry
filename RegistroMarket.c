@@ -39,6 +39,7 @@ void createRoot();
 void home();
 void login();
 void createEmployee();
+void salesmanLogin();
 
 int main() {
 	createRoot();
@@ -99,25 +100,32 @@ void createRoot() {
 }
 
 void createEmployee() {
-	
+	int i = 0;
 	do{
+		system("cls");
 		printf("\nSign on - create a new Salesman. ");
 		printf("\nName: ");
 		fflush(stdin);
-		gets(salesman[0].name);
+		gets(salesman[i].name);
 	
 		printf("\nRegistration: ");
 		fflush(stdin);
-		gets(salesman[0].registration);
+		gets(salesman[i].registration);
+		
+		if (i == 2) {
+			break;
+		}
 		
 		printf("\nDo you wanna save another salesman (yes)? - to exit: (sair)\n-->");
 		fflush(stdin);
 		gets(leave);
-		if(strcmp(leave, "sair") == 0) {
+		if( (strcmp(leave, "sair") == 0) ) {
 			break;
 		}
-	}while(strcmp(leave, "sair") != 0);
-	printf("Success saving new salesman!");
+		i++;
+	}while( (strcmp(leave, "sair") != 0));
+	printf("\nSuccess saving new salesman: %d", i);
+	printf("\nSalesman's data - 2: %s", salesman[1].name);
 	sleep(3);
 }
 
@@ -141,11 +149,10 @@ void home(){
 				printf("\n1- Create a Salesman:");
 				await();
 				createEmployee();
-				
 				break;
 			case 2:
 				printf("\nWelcome Employee!");
-				login();
+				salesmanLogin();
 				break;
 			default:
 				printf("Invalid choice!");
@@ -156,7 +163,7 @@ void home(){
 			break;
 		}
 		printf("Remain on loop %d", count);
-		sleep(5);	
+		sleep(2);	
 	}while(strcmp(leave, "sair") != 0);
 	
 	printf("\nWe get out loop");	
@@ -192,6 +199,56 @@ void login() {
 	printf("\nSuccess!");
 	await();
 				
+}
+
+void salesmanLogin() {
+	char username[20];
+	char registration[20];
+	int i = 0;
+	
+	printf("\nSign in (*---*)/)");
+	printf("\nlogin: ");
+	fflush(stdin);
+	gets(username);
+	
+	printf("\nRegistration: ");
+	fflush(stdin);
+	gets(registration);
+	
+	while( i < 2 ) {
+		if ( (strcmp(username, salesman[i].name) == 0) && (strcmp(registration, salesman[i].registration) == 0 ) ) {
+			printf("\nWelcome: %s", salesman[i].name);
+			await();
+			break;
+		}
+		i++;
+	}
+	
+	do{
+		system("cls");
+		if ( (strcmp(username, salesman[i].name) != 0) || (strcmp(registration, salesman[i].registration) != 0 ) ) {
+			printf("\nUser or registration incorrect - Try again!");
+			printf("\nlogin: ");
+			fflush(stdin);
+			gets(username);
+				
+			printf("\nPassword: ");
+			fflush(stdin);
+			gets(registration);
+			i=0;
+			while( i < 2 ) {
+				if ( (strcmp(username, salesman[i].name) == 0) && (strcmp(registration, salesman[i].registration) == 0 ) ) {
+					printf("\nWelcome: %s", salesman[i].name);
+					break;
+				}
+				i++;
+			}	
+		}	
+			
+	}while( (strcmp(username, salesman[i].name) != 0) || (strcmp(registration, salesman[i].registration) != 0 ) );
+	
+	printf("\nSuccess!");
+	await();
 }
 
 
