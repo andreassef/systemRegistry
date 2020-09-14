@@ -28,9 +28,12 @@ typedef struct resume {
 
 // Attributes
 int typeUser;
+int menuOptionRoot;
 Employee employee[0];
 Salesman salesman[2];
 char leave[5];
+char sair[5];
+char logoutRoot[5];
 
 // Procedures
 void welcomeMessage();
@@ -40,6 +43,7 @@ void home();
 void login();
 void createEmployee();
 void salesmanLogin();
+void menuRoot();
 
 int main() {
 	createRoot();
@@ -118,12 +122,13 @@ void createEmployee() {
 		
 		printf("\nDo you wanna save another salesman (yes)? - to exit: (sair)\n-->");
 		fflush(stdin);
-		gets(leave);
-		if( (strcmp(leave, "sair") == 0) ) {
-			break;
-		}
+		gets(sair);
+		//if( (strcmp(sair, "nao") == 0) ) {
+			//break;
+		//}
 		i++;
-	}while( (strcmp(leave, "sair") != 0));
+	}while( (strcmp(sair, "sair") != 0));
+	
 	printf("\nSuccess saving new salesman: %d", i);
 	printf("\nSalesman's data - 2: %s", salesman[1].name);
 	sleep(3);
@@ -144,25 +149,29 @@ void home(){
 			case 1:
 				printf("\nWelcome Admin!");
 				login();
-				printf("\nDashboard -");
+				printf("\nDashboard - Root");
 				// criar funcao com switch case para interface do superusario
-				printf("\n1- Create a Salesman:");
-				await();
-				createEmployee();
+				menuRoot();
 				break;
 			case 2:
 				printf("\nWelcome Employee!");
-				salesmanLogin();
+				if ( strcmp(salesman[0].name, "") == 0) {
+					printf("\nNo salesman yet! Create a new Salesman firts!");
+					await();
+					break;
+				}else {
+					salesmanLogin();
+				}
 				break;
 			default:
 				printf("Invalid choice!");
 		}
 		
 		count++;
-		if(strcmp(leave, "sair") == 0) {
-			break;
-		}
-		printf("Remain on loop %d", count);
+		//if(strcmp(sair, "sair") == 0) {
+			//break;
+		//}
+		printf("\nRemain on loop %d", count);
 		sleep(2);	
 	}while(strcmp(leave, "sair") != 0);
 	
@@ -248,6 +257,41 @@ void salesmanLogin() {
 	}while( (strcmp(username, salesman[i].name) != 0) || (strcmp(registration, salesman[i].registration) != 0 ) );
 	
 	printf("\nSuccess!");
+	await();
+}
+
+void menuRoot() {
+	do{
+		system("cls");
+		printf("\nWelcome: Admin %s!", employee[0].name);
+		printf("\n1 - Create new Salesman.");
+		printf("\n2 - Create new product. ");
+		printf("\n3 - Show product's reports. ");
+		printf("\n4 - Logout\n-->");
+		scanf("%d", &menuOptionRoot);
+		
+		switch(menuOptionRoot) {
+			case 1:
+				createEmployee();
+				break;
+			case 2:
+				printf("\nNew Product");
+				await();
+				break;
+			case 3:
+				printf("\nReports");
+				await();
+				break;
+			case 4:
+				printf("\nLogout: (sair)");
+				fflush(stdin);
+				gets(logoutRoot);
+				break;
+			default:
+				printf("\nInvalid Option, try again!");
+		}				
+	}while(strcmp(logoutRoot, "sair") != 0 );
+	printf("\nfinishing...");
 	await();
 }
 
