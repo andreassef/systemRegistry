@@ -29,11 +29,14 @@ typedef struct resume {
 // Attributes
 int typeUser;
 int menuOptionRoot;
-Employee employee[0];
-Salesman salesman[2];
 char leave[5];
 char sair[5];
 char logoutRoot[5];
+
+// Structs
+Employee employee[0];
+Salesman salesman[2];
+Product product[5];
 
 // Procedures
 void welcomeMessage();
@@ -44,6 +47,7 @@ void login();
 void createEmployee();
 void salesmanLogin();
 void menuRoot();
+void createProduct();
 
 int main() {
 	createRoot();
@@ -154,12 +158,12 @@ void home(){
 				menuRoot();
 				break;
 			case 2:
-				printf("\nWelcome Employee!");
 				if ( strcmp(salesman[0].name, "") == 0) {
 					printf("\nNo salesman yet! Create a new Salesman firts!");
 					await();
 					break;
 				}else {
+					printf("\nWelcome Employee!");
 					salesmanLogin();
 				}
 				break;
@@ -270,13 +274,14 @@ void menuRoot() {
 		printf("\n4 - Logout\n-->");
 		scanf("%d", &menuOptionRoot);
 		
+		printf("\n LOADING...");
+		await();
 		switch(menuOptionRoot) {
 			case 1:
 				createEmployee();
 				break;
 			case 2:
-				printf("\nNew Product");
-				await();
+				createProduct();
 				break;
 			case 3:
 				printf("\nReports");
@@ -291,6 +296,29 @@ void menuRoot() {
 				printf("\nInvalid Option, try again!");
 		}				
 	}while(strcmp(logoutRoot, "sair") != 0 );
+	printf("\nfinishing...");
+	await();
+}
+
+void createProduct() {
+	int c = 0;
+	do{
+		system("cls");
+		printf("\nREGISTER PRODUCTS");
+		printf("\nProduct name: ");
+		fflush(stdin);
+		gets(product[c].name);
+		printf("\nQuantity: ");
+		scanf("%d", &product[c].quantity);
+		printf("\nValue: $");
+		scanf("%f",&product[c].price);
+		c++;
+		printf("Save another product (y)? to exit (sair): ");
+		fflush(stdin);
+		gets(sair);		
+	}while( strcmp(sair, "sair") != 0 );
+	printf("Product %s", product[1].name);
+	printf("\nSuccess!");
 	printf("\nfinishing...");
 	await();
 }
