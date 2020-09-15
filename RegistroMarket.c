@@ -369,7 +369,7 @@ void sale() {
 				
 				product[y].quantity = remainQuantity;
 				
-				report[idReport].name[20] = product[y].name ;
+				strcpy(report[idReport].name, product[y].name);
 				report[idReport].quantity = quantity;
 				report[idReport].total = valueIten;
 			}
@@ -403,7 +403,7 @@ void showReport() {
 		}
 		printf("\n------------------------- Total $%.2f", sumTotal);
 		
-		printf("to exit (sair): ");
+		printf("\nto exit (sair): ");
 		fflush(stdin);
 		gets(sair);
 	}while(strcmp(sair, "sair") != 0 );
