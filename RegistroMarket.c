@@ -50,9 +50,9 @@ void salesmanLogin();
 void menuRoot();
 void createProduct();
 void sale();
+void showReport();
 
 int main() {
-	createRoot();
 	home();
 	return 0;
 }
@@ -143,8 +143,12 @@ void createEmployee() {
 
 
 void home(){
-	int count;
+	int count = 0;
 	do{
+		if(count == 0){
+			createRoot();	
+		}
+		
 		system("cls");
 		printf("\nWelcome!");
 		printf("\n1 - Run as admin. ");
@@ -188,7 +192,7 @@ void home(){
 void login() {
 	char username[20];
 	char password[20];
-	printf("\nSign in (*---*)/)");
+	printf("\nSign in (*---*)/");
 	printf("\nlogin: ");
 	fflush(stdin);
 	gets(username);
@@ -197,9 +201,14 @@ void login() {
 	fflush(stdin);
 	gets(password);
 	
-	if ( (strcmp(username, employee[0].name) != 0) || (strcmp(password, employee[0].password) != 0 )) {
+	strcpy(username, employee[0].name); 
+	strcpy(password, employee[0].password);
+	
+	
+	if ( (strcmp(username, employee[0].name) != 0 ) || (strcmp(password, employee[0].password) != 0 )) {
 		do{
 			system("cls");
+		
 			printf("\nUser or password incorrect - Try again!");
 			printf("\nlogin: ");
 			fflush(stdin);
@@ -209,12 +218,13 @@ void login() {
 			fflush(stdin);
 			gets(password);
 			
+			//strcpy(employee[0].name, username);
+			//strcpy(employee[0].password, password);
 		}while( (strcmp(username, employee[0].name) != 0) || (strcmp(password, employee[0].password) != 0 ) );
 	}
 	
 	printf("\nSuccess!");
-	await();
-				
+	await();				
 }
 
 void salesmanLogin() {
@@ -287,7 +297,7 @@ void menuRoot() {
 				createProduct();
 				break;
 			case 3:
-				printf("\nReports");
+				showReport();
 				await();
 				break;
 			case 4:
@@ -377,6 +387,26 @@ void sale() {
 	printf("\nfinishing...");
 	await();
 	
+}
+
+void showReport() {
+	int i;
+	float sumTotal = 0;
+	
+	do{
+		system("cls");
+		printf("\nREPORT\n");
+		printf("\nID -- Name -- Quantity -- Total ");
+		for( i=0; i<5; i++ ){
+			printf("\n%d -- %s   -- %d  --  $%.2f", i, report[i].name, report[i].quantity, report[i].total);
+			sumTotal = sumTotal + report[i].total;
+		}
+		printf("\n------------------------- Total $%.2f", sumTotal);
+		
+		printf("to exit (sair): ");
+		fflush(stdin);
+		gets(sair);
+	}while(strcmp(sair, "sair") != 0 );
 }
 
 
