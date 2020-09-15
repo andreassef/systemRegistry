@@ -204,7 +204,6 @@ void login() {
 	strcpy(username, employee[0].name); 
 	strcpy(password, employee[0].password);
 	
-	
 	if ( (strcmp(username, employee[0].name) != 0 ) || (strcmp(password, employee[0].password) != 0 )) {
 		do{
 			system("cls");
@@ -283,7 +282,7 @@ void menuRoot() {
 		printf("\nWelcome: Admin %s!", employee[0].name);
 		printf("\n1 - Create new Salesman.");
 		printf("\n2 - Create new product. ");
-		printf("\n3 - Show product's reports. ");
+		printf("\n3 - Show products reports. ");
 		printf("\n4 - Logout\n-->");
 		scanf("%d", &menuOptionRoot);
 		
@@ -325,7 +324,16 @@ void createProduct() {
 		scanf("%d", &product[c].quantity);
 		printf("\nValue: $");
 		scanf("%f",&product[c].price);
+		
+		if( product[c].price <= 0 ) {
+			do{
+				printf("\nDon't insert values negatives or equals zero!");
+				printf("\nValue: $");
+				scanf("%f",&product[c].price);	
+			}while(product[c].price <= 0);	
+		}
 		c++;
+		
 		printf("Save another product (y)? to exit (sair): ");
 		fflush(stdin);
 		gets(sair);		
