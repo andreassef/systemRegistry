@@ -322,6 +322,14 @@ void createProduct() {
 		gets(product[c].name);
 		printf("\nQuantity: ");
 		scanf("%d", &product[c].quantity);
+		if( product[c].quantity <= 0 ) {
+			do{
+				printf("\nDon't insert values negatives or equals zero!");
+				printf("\nQunatity: ");
+				scanf("%f",&product[c].quantity);	
+			}while(product[c].quantity <= 0);	
+		}
+		
 		printf("\nValue: $");
 		scanf("%f",&product[c].price);
 		
