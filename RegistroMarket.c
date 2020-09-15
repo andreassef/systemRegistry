@@ -21,8 +21,8 @@ typedef struct iten {
 }Product;
 
 typedef struct resume {
-	char produtoVendido[20];
-	int quantidade;
+	char name[20];
+	int quantity;
 	float total;
 }Report;
 
@@ -37,6 +37,7 @@ char logoutRoot[5];
 Employee employee[0];
 Salesman salesman[2];
 Product product[5];
+Report report[5];
 
 // Procedures
 void welcomeMessage();
@@ -48,6 +49,7 @@ void createEmployee();
 void salesmanLogin();
 void menuRoot();
 void createProduct();
+void sale();
 
 int main() {
 	createRoot();
@@ -165,6 +167,7 @@ void home(){
 				}else {
 					printf("\nWelcome Employee!");
 					salesmanLogin();
+					sale();
 				}
 				break;
 			default:
@@ -321,6 +324,59 @@ void createProduct() {
 	printf("\nSuccess!");
 	printf("\nfinishing...");
 	await();
+}
+
+void sale() {
+	int i, y, choice, quantity;
+	int idReport = 0;
+	int remainQuantity;
+	char name[20];
+	
+	do{
+		system("cls");
+		printf("\nMENU PRODUCTS\n");
+		printf("\nID -- Name -- Price -- Quantity");
+		for( i=0; i<5; i++ ){
+			printf("\n%d -- %s   -- $%.2f -- %d", i, product[i].name, product[i].price, product[i].quantity);
+		}
+		
+		printf("\nChoice your product!\n-->");
+		scanf("%d",&choice);
+		
+		for(y=0; y<5; y++){
+			if(y == choice){
+				//char newName[10] = product[y].name;
+				do{
+					printf("\nQuantity: ");
+					scanf("%d",&quantity);
+					remainQuantity = product[y].quantity - quantity;
+					if(remainQuantity < 0) {
+						printf("\nQuantity unavailable, try again!");
+						await();	
+					}
+				}while( remainQuantity < 0);
+				float valueIten = product[y].price * quantity;
+				
+				product[y].quantity = remainQuantity;
+				
+				report[idReport].name[20] = product[y].name ;
+				report[idReport].quantity = quantity;
+				report[idReport].total = valueIten;
+			}
+		}
+		
+		idReport++;
+		
+		printf("Sale another (y)? to exit (sair): ");
+		fflush(stdin);
+		gets(sair);
+	}while(strcmp(sair, "sair") != 0 );
+	
+	//printf("Thank you! %s", report[1].name);
+	printf("\nSuccess!");
+	printf("\nfinishing...");
+	await();
+	
 }
 
 
